@@ -1,5 +1,16 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
+}
+
+val secretsFile = rootProject.file("secrets.properties")
+val maptilerKey: String = if (secretsFile.exists()) {
+    val props = Properties()
+    secretsFile.inputStream().use { props.load(it) }
+    props.getProperty("MAPTILER_API_KEY", "demo")
+} else {
+    "demo"
 }
 
 android {
@@ -12,6 +23,12 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
+
+        buildConfigField("String", "MAPTILER_API_KEY", "\"$maptilerKey\"")
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
@@ -41,5 +58,6 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
     testImplementation("junit:junit:4.13.2")
 }

@@ -5,10 +5,14 @@ object ManeuverParser {
         """(\d+(?:[.,]\d+)?)\s*(kilometers?|km|miles?|mi|meters?|m|feet|ft|yards?|yd)\b""",
         RegexOption.IGNORE_CASE
     )
+    private val TRAILING_DIST_RE = Regex(
+        """\s+\d+(?:[.,]\d+)?\s*(?:kilometers?|km|miles?|mi|meters?|m|feet|ft|yards?|yd)\s*$""",
+        RegexOption.IGNORE_CASE
+    )
     private val ETA_CLOCK_RE = Regex("""\b(\d{1,2}:\d{2}\s*(?:AM|PM)?)\b""", RegexOption.IGNORE_CASE)
     private val ETA_MIN_RE = Regex("""\b(\d+)\s*min(?:ute)?s?\b""", RegexOption.IGNORE_CASE)
     private val EXIT_RE = Regex("""\b(?:take\s+the\s+)?(\d+(?:st|nd|rd|th)|first|second|third|fourth)\s+exit\b""", RegexOption.IGNORE_CASE)
-    private val ONTO_RE = Regex("""\b(?:onto|on to|toward|towards|on)\s+(.+)$""", RegexOption.IGNORE_CASE)
+    private val ONTO_RE = Regex("""\b(?:onto|on to|toward|towards|on)\s+(?!(?:the\s+)?(?:right|left)\b)(.+)$""", RegexOption.IGNORE_CASE)
 
     fun parse(title: String?, text: String?, subText: String?, bigText: String?): NavState {
         val parts = listOfNotNull(title, text, subText, bigText)
@@ -24,11 +28,16 @@ object ManeuverParser {
         }
 
         val maneuver = detectManeuver(lower)
+
+        // Prioritize distance from title if available (Google Maps standard)
+        val titleMatch = title?.let { DIST_RE.find(it)?.value?.replace(",", ".") }
         val distances = DIST_RE.findAll(hay).map { it.value.replace(",", ".") }.toList()
-        val distText = distances.firstOrNull().orEmpty().ifBlank {
-            title?.takeIf { DIST_RE.containsMatchIn(it) } ?: ""
-        }
+
+        val distText = titleMatch ?: distances.firstOrNull().orEmpty()
         val remain = when {
+            subText != null && DIST_RE.containsMatchIn(subText) -> {
+                DIST_RE.find(subText)?.value?.replace(",", ".").orEmpty()
+            }
             distances.size >= 2 -> distances.last()
             else -> ""
         }
@@ -65,7 +74,7 @@ object ManeuverParser {
             containsAny(lower, "slight right", "keep right", "bear right", "veer right") -> return "slight-right"
             containsAny(lower, "slight left", "keep left", "bear left", "veer left") -> return "slight-left"
             containsAny(lower, "roundabout", "rotary", "traffic circle") || EXIT_RE.containsMatchIn(lower) -> return "roundabout"
-            containsAny(lower, "you have arrived", "you've arrived", "arrive at destination", "destination on the") -> return "arrive"
+            containsAny(lower, "you have arrived", "you've arrived", "arrive at destination", "destination on the", "destination will be") -> return "arrive"
             containsAny(lower, "turn right", "right onto", "right turn", "right toward", "right towards") -> return "turn-right"
             containsAny(lower, "turn left", "left onto", "left turn", "left toward", "left towards") -> return "turn-left"
             containsAny(lower, "continue", "straight", "head north", "head south", "head east", "head west", "merge") -> return "straight"
@@ -74,6 +83,9 @@ object ManeuverParser {
     }
 
     private fun extractStreet(instruction: String, maneuver: String, hay: String): String {
+        if (maneuver == "arrive" || instruction.contains("destination", ignoreCase = true)) {
+            return "Destination"
+        }
         if (maneuver == "roundabout") {
             val exit = EXIT_RE.find(hay)?.value
             if (!exit.isNullOrBlank()) return exit.replaceFirstChar { it.uppercase() }
@@ -81,12 +93,12 @@ object ManeuverParser {
         val onto = ONTO_RE.find(instruction.trim())
         if (onto != null) {
             return onto.groupValues[1]
-                .replace(DIST_RE, "")
+                .replace(TRAILING_DIST_RE, "")
                 .replace(ETA_CLOCK_RE, "")
                 .trim(' ', ',', '.', '-', '·')
         }
         val cleaned = instruction
-            .replace(DIST_RE, "")
+            .replace(TRAILING_DIST_RE, "")
             .replace(ETA_CLOCK_RE, "")
             .trim(' ', ',', '.', '-', '·')
         return cleaned.take(48)

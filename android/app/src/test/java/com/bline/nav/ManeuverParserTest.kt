@@ -47,6 +47,26 @@ class ManeuverParserTest {
     }
 
     @Test
+    fun destinationOnTheRight() {
+        val s = ManeuverParser.parse("0 m", "Destination on the right", null, null)
+        assertEquals("arrive", s.maneuver)
+        assertEquals("Destination", s.street)
+    }
+
+    @Test
+    fun streetNamedWithDistance() {
+        val s = ManeuverParser.parse(
+            "240 m",
+            "Turn left onto 100 Feet Road",
+            "12 min · 4.2 km",
+            null
+        )
+        assertEquals("turn-left", s.maneuver)
+        assertEquals("240 m", s.distText)
+        assertEquals("100 Feet Road", s.street)
+    }
+
+    @Test
     fun doesNotTreatMinutesAsMeters() {
         val s = ManeuverParser.parse(
             "Turn left onto Foo St",

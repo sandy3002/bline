@@ -10,7 +10,7 @@ class MapsNotificationListener : NotificationListenerService() {
         val parsed = parse(sbn.notification)
         val isNav = parsed.nav || sbn.notification.category == Notification.CATEGORY_NAVIGATION
         if (isNav) {
-            NavStore.update(if (parsed.nav) parsed else parsed.copy(nav = true))
+            NavStore.updateManeuver(if (parsed.nav) parsed else parsed.copy(nav = true))
         }
     }
 
@@ -32,7 +32,7 @@ class MapsNotificationListener : NotificationListenerService() {
         if (maps != null) {
             val parsed = parse(maps.notification)
             if (parsed.nav || maps.notification.category == Notification.CATEGORY_NAVIGATION) {
-                NavStore.update(if (parsed.nav) parsed else parsed.copy(nav = true))
+                NavStore.updateManeuver(if (parsed.nav) parsed else parsed.copy(nav = true))
             }
         }
     }

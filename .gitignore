@@ -7,6 +7,8 @@ secrets.h
 *.jks
 local.properties
 android/local.properties
+secrets.properties
+android/secrets.properties
 
 # ==============================================================================
 # Arduino & Embedded Build Artifacts
@@ -74,3 +76,6 @@ Desktop.ini
 # Local Analysis & Temporary Reports
 # ==============================================================================
 graphify-out/
+*_report.md
+concepts_brief.md
+design_draft.md
