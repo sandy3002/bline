@@ -1,4 +1,4 @@
-package com.beeline.nav
+package com.bline.nav
 
 data class NavState(
     val nav: Boolean = false,

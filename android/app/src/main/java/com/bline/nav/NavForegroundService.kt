@@ -1,4 +1,4 @@
-package com.beeline.nav
+package com.bline.nav
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -85,9 +85,9 @@ class NavForegroundService : Service() {
     }
 
     companion object {
-        const val CHANNEL_ID = "beeline_nav"
+        const val CHANNEL_ID = "bline_nav"
         const val NOTIF_ID = 42
-        const val ACTION_STOP = "com.beeline.nav.STOP"
+        const val ACTION_STOP = "com.bline.nav.STOP"
 
         @Volatile
         var running: Boolean = false

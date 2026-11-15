@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.beeline.nav"
+    namespace = "com.bline.nav"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.beeline.nav"
+        applicationId = "com.bline.nav"
         minSdk = 26
         targetSdk = 35
         versionCode = 1

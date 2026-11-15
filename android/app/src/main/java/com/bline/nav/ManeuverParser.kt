@@ -1,4 +1,4 @@
-package com.beeline.nav
+package com.bline.nav
 
 object ManeuverParser {
     private val DIST_RE = Regex(

@@ -1,4 +1,4 @@
-# Beeline — portable turn-by-turn display
+# Bline — portable turn-by-turn display
 
 Waveshare ESP32-S3-Touch-LCD-1.28 shows the next turn. Your Android phone
 runs Google Maps, scrapes the navigation notification, and serves JSON on
@@ -43,7 +43,7 @@ See [android/BUILD_CLI.md](android/BUILD_CLI.md): install JDK 17 + Android comma
 1. Open the `android/` folder in Android Studio and let Gradle sync.
 2. Plug in the phone, enable USB debugging, Run the app.
 3. In the app:
-   - **Grant notification access** — enable Beeline Nav
+   - **Grant notification access** — enable Bline Nav
    - **Disable battery optimization** — allow unrestricted
    - **Start service**
 4. Phone locale should be **English** (the parser matches English Maps text).

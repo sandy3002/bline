@@ -1,8 +1,8 @@
 /*
-  Beeline — Waveshare ESP32-S3-Touch-LCD-1.28 (GC9A01 240x240)
+  Bline — Waveshare ESP32-S3-Touch-LCD-1.28 (GC9A01 240x240)
 
   Turn-by-turn renderer. The phone owns routing; this board polls
-  GET http://<gateway>:8080/nav and draws a Beeline-style ribbon.
+  GET http://<gateway>:8080/nav and draws a Bline-style ribbon.
 
   Arduino IDE (required for this board):
     Board: ESP32S3 Dev Module
@@ -508,7 +508,7 @@ void setup() {
   }
 
   bootCount++;
-  Serial.printf("Beeline boot #%lu\n", (unsigned long)bootCount);
+  Serial.printf("Bline boot #%lu\n", (unsigned long)bootCount);
   logHeap("boot");
 
 #ifndef BOARD_HAS_PSRAM

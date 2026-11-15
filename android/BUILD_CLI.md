@@ -40,7 +40,7 @@ android sdk install "platform-tools"
 ## 3. Project local config
 
 ```fish
-cd /Users/garchomp/Documents/Arduino/beeline/android
+cd /Users/garchomp/Documents/Arduino/bline/android
 echo "sdk.dir=$HOME/Library/Android/sdk" > local.properties
 ```
 
@@ -49,7 +49,7 @@ Gradle Wrapper is already in the repo (`./gradlew`). No need to run `gradle wrap
 ## 4. Build
 
 ```fish
-cd /Users/garchomp/Documents/Arduino/beeline/android
+cd /Users/garchomp/Documents/Arduino/bline/android
 set -gx JAVA_HOME /opt/homebrew/opt/openjdk/libexec/openjdk.jdk/Contents/Home
 ./gradlew --stop
 ./gradlew assembleDebug

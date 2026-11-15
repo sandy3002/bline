@@ -1,4 +1,4 @@
-package com.beeline.nav
+package com.bline.nav
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse

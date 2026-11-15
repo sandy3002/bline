@@ -1,4 +1,4 @@
-package com.beeline.nav
+package com.bline.nav
 
 import android.Manifest
 import android.content.Intent

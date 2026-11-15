@@ -1,4 +1,4 @@
-package com.beeline.nav
+package com.bline.nav
 
 import android.util.Log
 import java.io.BufferedReader
@@ -14,7 +14,7 @@ class NavHttpServer(private val port: Int = 8080) {
 
     fun start() {
         if (!running.compareAndSet(false, true)) return
-        thread(name = "beeline-http", isDaemon = true) {
+        thread(name = "bline-http", isDaemon = true) {
             try {
                 server = ServerSocket(port)
                 Log.i(TAG, "listening on :$port")
@@ -24,7 +24,7 @@ class NavHttpServer(private val port: Int = 8080) {
                     } catch (_: Exception) {
                         null
                     } ?: continue
-                    thread(name = "beeline-http-client", isDaemon = true) {
+                    thread(name = "bline-http-client", isDaemon = true) {
                         handle(socket)
                     }
                 }

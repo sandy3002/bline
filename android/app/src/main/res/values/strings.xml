@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Beeline Nav</string>
+    <string name="app_name">Bline Nav</string>
     <string name="channel_name">Navigation bridge</string>
     <string name="channel_desc">Keeps the hotspot HTTP server alive while Maps is navigating</string>
 </resources>

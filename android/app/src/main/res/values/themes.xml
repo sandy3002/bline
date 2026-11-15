@@ -1,5 +1,5 @@
 <resources>
-    <style name="Theme.BeelineNav" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.BlineNav" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryVariant">@color/black</item>
         <item name="colorOnPrimary">@color/black</item>

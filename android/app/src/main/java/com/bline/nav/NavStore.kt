@@ -1,4 +1,4 @@
-package com.beeline.nav
+package com.bline.nav
 
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicLong
