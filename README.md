@@ -1,4 +1,4 @@
-# Beeline
+# Bline (read as B-line since I don't wanna be sued)
 
 Portable turn-by-turn display for the Waveshare ESP32-S3-Touch-LCD-1.28.
 
